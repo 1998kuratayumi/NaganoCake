@@ -1,0 +1,51 @@
+<h2><%= @end_user.last_name + @end_user.first_name %>さんの会員詳細</h2>
+<div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>会員ID</th>
+          <th>氏名</th>
+          <th>フリガナ</th>
+          <th>郵便番号</th>
+          <th>電話番号</th>
+          <th>メールアドレス</th>
+          <th>会員ステータス</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          <tr>
+            <td>
+              <%= @end_user.id %>
+            </td>
+            <td>
+                <%= @end_user.last_name+@end_user.first_name %>
+            </td>
+            <td>
+              <%= @end_user.zip_code %>
+            </td>
+            <td>
+              <%= @end_user.address %>
+            </td>
+            <td>
+              <%= @end_user.telephone_number %>
+            </td>
+            <td>
+              <%= @end_user.email %>
+            </td>
+            
+            <td>
+              <% if @end_user.is_valid == false%>
+                <p>退会済</p>
+              <% else %>
+                <p>有効</p>
+              <% end %>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+      <%= link_to "編集する", edit_admin_end_user_path(@end_user), class: 'glyphicon glyphicon-home btn btn-primary' %>
+      <%= link_to "注文履歴一覧をみる", admin_orders_path, class: 'glyphicon glyphicon-home btn btn-primary' %>
+  </div>
+</div>

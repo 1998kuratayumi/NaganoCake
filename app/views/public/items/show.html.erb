@@ -1,0 +1,26 @@
+<div class="row">
+		<div class="clearfix product-box">
+			<div>
+	        <%= attachment_image_tag(@item, :image, size: "180x130", fallback: "no_image.jpg") %>
+	      </div>
+	     <p>
+	        <%= @item.name %>
+	      </p>
+	      <p>
+	        <%= @item.description %>
+	      </p>
+	      <p>
+	      　￥<%= (@item.no_tax_price*1.08).to_i %>
+	      </p>
+	      <p>
+          <%= form_for(@cart_item , url: cart_items_path, method: :post) do |f| %>
+            <%= f.hidden_field :item_id, :value => @item.id %> 
+            <%#= f.select :amount, options_for_select((1..10).to_a), include_blank: "個数選択" %> 
+            <!--to_aによって配列化-->
+             <%= f.select :amount, *[1..10], include_blank: "個数選択" %> 
+            <%= f.submit "カートに入れる", class: "glyphicon glyphicon-shopping-cart btn btn-primary" %>
+          <% end %>
+	     </p>
+		</div>
+	</div>
+</div>

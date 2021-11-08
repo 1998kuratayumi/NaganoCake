@@ -1,0 +1,29 @@
+<div>
+	<div>
+		<h2>
+		商品一覧
+		<span>
+			(全<%= @items.count %>件)
+		</span>
+		</h2>
+		<div>
+			<% @genres.each do |genre| %>
+      	<td><%= link_to genre.name, items_path(genre_id: genre.id), class: "text-dark" %></td>
+    	<% end %>
+    </div>
+		<div>
+			<% @items.each do |item| %>
+				<div>
+	        <%= attachment_image_tag(item, :image, size: "180x130", fallback: "no_image.jpg") %>
+	      </div>
+	      <p>
+	        <%= item.name %>
+	      </p>
+	      <p>
+	      　￥<%= (item.no_tax_price*1.08).to_i %>
+	      </p>
+	     	 <%= link_to "詳細", item_path(item) %>
+	     	<% end %>
+		</div>
+	</div>
+</div>

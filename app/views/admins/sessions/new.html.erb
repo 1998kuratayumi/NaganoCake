@@ -1,0 +1,23 @@
+
+<div>
+  <div>
+    <h2>管理者ログイン</h2>
+    
+  <%= form_with model: @admin, url:admin_session_path, local:true do |f| %>
+  <%= render "admins/shared/error_messages", resource: resource %>
+  　<div>
+      <%= f.label :"メールアドレス", class: "col-sm-4 control-label" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-sm-8 form-control-static" %>
+    </div>
+    
+    <div>
+      <%= f.label :"パスワード", class: "col-sm-4 control-label" %>
+      <%= f.password_field :password, autocomplete: "current-password", class: "col-sm-8 form-control-static" %>
+    </div>
+
+    <div>
+      <%= f.submit "　ログイン　", class: "btn btn-info pull-right btn-lg" %>
+    </div>
+  <% end %>  
+  </div>
+</div>

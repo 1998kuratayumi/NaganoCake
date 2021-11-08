@@ -1,0 +1,79 @@
+<h2>注文情報確認</h2>
+<div>
+  <div>
+      <table>
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>単価(税込)</th>
+            <th>数量</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+        <tbody>
+           <% total_price2 = 0 %>
+           <% total_price = 0 %>
+          <% @cart_items.each do |cart| %>
+            <tr>
+              <td>
+                <%= attachment_image_tag( cart.item, :image, size: "60x50", fallback: "no_image.jpg") %>
+                <%= cart.item.name %>
+              </td>
+              <td >
+                ¥<%= (cart.item.no_tax_price*1.08).to_i %>
+                <% total_price+=cart.item.no_tax_price*cart.amount*1.08 %>
+              </td>
+              <td>
+                  <%= cart.amount %>
+              </td>
+              <td>
+                ¥<%= total_price.to_i %>
+                <% total_price2+=total_price %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+          <tr>
+            <th>送料</th>
+            <td>¥<%= @order.shipping_cost %></td>
+          </tr>
+          <tr>
+            <th>商品合計</th>
+            <td>¥<%= total_price2.to_i %></td>
+          </tr>
+          <tr>
+            <th>請求金額</th>
+            <td>¥<%= total_price2.to_i + @order.shipping_cost %></td>
+          </tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <th>支払方法</th>
+          <td>
+            <%= @order.payment_method_i18n %>
+            <!--日本語化-->
+          </td>
+        </tr>
+        <tr>
+          <th>お届け先</th>
+          <td >
+            〒<%= @order.ship_postal_code + " " + @order.ship_address + " " + @order.ship_name %>
+          </td>
+        </tr>
+      </table>
+       <%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
+       <%= f.hidden_field :ship_postal_code, :value => @order.ship_postal_code %>
+       <%= f.hidden_field :ship_address, :value => @order.ship_address %>
+       <%= f.hidden_field :ship_name, :value => @order.ship_name %>
+       <%= f.hidden_field :payment_method, :value => @order.payment_method %>
+       <%= f.hidden_field :total_payment, :value => total_price2.to_i + @order.shipping_cost %>
+       <%= f.submit "購入を確定する", data: {confirm: '購入して本当によろしいですか？'},class: "btn btn-warning center-block col-xs-5" %>
+       <% end %>
+    </div>
+</div>
