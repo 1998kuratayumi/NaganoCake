@@ -14,7 +14,7 @@ class Admin::OrdersController < ApplicationController
 	def update
 		@order = Order.find(params[:id])
 		@order_detail = @order.order_details
-		@order.update(order_params)
+		@order.update_(order_params)
 		    if @order.status == "paied"
 		     	 @order_detail.update(products_status: "waiting_for_pdoduction") #製作待ち
 		    end

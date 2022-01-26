@@ -81,6 +81,7 @@
 	     		   <%= form_for(order_detail, url: admin_order_detail_path(order_detail), method: :patch) do |f| %>
 		         <td>
 		           <%= f.select :products_status, OrderDetail.products_statuses.keys.map {|k| [I18n.t("enums.order_detail.products_status.#{k}"), k]}, class: "order_status" %>
+		           <%#= f.select :status,Order.statuses_i18n.invert %>
 		           <%= f.submit '更新'  ,class: "btn btn-warning" %>
 		         </td>
           		   <% end %>
